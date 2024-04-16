@@ -8,10 +8,10 @@ from collections import Counter
 
 
 def preprocess(text):
-    text = text.lower()  # Convert to lowercase
-    text = ''.join([char for char in text if char.isalpha() or char.isspace()])  # Remove punctuation
+    text = text.lower()  
+    text = ''.join([char for char in text if char.isalpha() or char.isspace()]) 
     tokens = nltk.word_tokenize(text)  # Tokenize
-    tokens = [token for token in tokens if token not in stopwords.words('english')]  # Remove stopwords
+    tokens = [token for token in tokens if token not in stopwords.words('english')]  
     return tokens
 
 
@@ -22,7 +22,7 @@ with open(r'C:\Users\jdome\PycharmProjects\pythonProject1\Geico_Reviews_for_Gith
 reviews = [preprocess(review.strip()) for review in reviews]
 
 
-n = 4
+n = 4 #edit depending on desired lenght 
 all_ngrams = []
 for review in reviews:
     all_ngrams.extend(list(ngrams(review, n)))
@@ -31,6 +31,6 @@ for review in reviews:
 ngram_counts = Counter(all_ngrams)
 
 
-most_common_ngrams = ngram_counts.most_common(5)
+most_common_ngrams = ngram_counts.most_common(5) #Edit depending on desired number of results
 
 print(most_common_ngrams)
