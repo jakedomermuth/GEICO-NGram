@@ -1,0 +1,36 @@
+import nltk
+nltk.download('punkt')
+nltk.download('stopwords')
+
+from nltk.corpus import stopwords
+from nltk import ngrams
+from collections import Counter
+
+
+def preprocess(text):
+    text = text.lower()  # Convert to lowercase
+    text = ''.join([char for char in text if char.isalpha() or char.isspace()])  # Remove punctuation
+    tokens = nltk.word_tokenize(text)  # Tokenize
+    tokens = [token for token in tokens if token not in stopwords.words('english')]  # Remove stopwords
+    return tokens
+
+
+with open(r'C:\Users\jdome\PycharmProjects\pythonProject1\Geico_Reviews_for_Github.txt', 'r', encoding='utf-8') as file:
+    reviews = file.readlines()
+
+
+reviews = [preprocess(review.strip()) for review in reviews]
+
+
+n = 4
+all_ngrams = []
+for review in reviews:
+    all_ngrams.extend(list(ngrams(review, n)))
+
+
+ngram_counts = Counter(all_ngrams)
+
+
+most_common_ngrams = ngram_counts.most_common(5)
+
+print(most_common_ngrams)
